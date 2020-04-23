@@ -1,5 +1,6 @@
 library person_view;
 
+import 'package:app_list/widgets/img_crop/img_crop_widget.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';
 import 'person_view_model.dart';
