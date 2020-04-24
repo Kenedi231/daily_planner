@@ -1,5 +1,7 @@
 library img_crop_widget;
 
+import 'package:app_list/core/locator.dart';
+import 'package:app_list/core/services/navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_image_crop/simple_image_crop.dart';
 

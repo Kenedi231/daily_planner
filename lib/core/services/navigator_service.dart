@@ -32,4 +32,6 @@ class NavigatorService extends BaseService {
     }
     navigatorKey.currentState.pop(result);
   }
+
+  
 }

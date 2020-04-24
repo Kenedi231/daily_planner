@@ -1,4 +1,7 @@
+import 'package:app_list/core/locator.dart';
+import 'package:app_list/core/services/navigator_service.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:logger/logger.dart';
 import '../logger.dart';
 
@@ -7,6 +10,7 @@ class BaseViewModel extends ChangeNotifier {
   bool _busy;
   Logger log;
   bool _isDisposed = false;
+  var navigation = locator<NavigatorService>();
 
   BaseViewModel({
     bool busy = false,

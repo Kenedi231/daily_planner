@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-final ThemeData lightTheme = _lightTheme();
+final ThemeData nightTheme = _nightTheme();
 
-ThemeData _lightTheme() {
+ThemeData _nightTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    primaryColor: Colors.redAccent,
-    backgroundColor: Colors.white,
+    primaryColor: Colors.grey[900],
+    backgroundColor: Colors.grey[700],
     accentColor: Colors.grey[400],
     iconTheme: IconThemeData(
-      color: Colors.white,
+      color: Colors.blueAccent,
     ),
-    textTheme: _buildLightTextTheme(base.textTheme),
+    textTheme: _buildLightTextTheme(base.textTheme).apply(
+      bodyColor: Colors.white,
+    ),
     primaryTextTheme: _buildLightTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildLightTextTheme(base.accentTextTheme),
+    
   );
 }
 
@@ -32,6 +35,10 @@ TextTheme _buildLightTextTheme(TextTheme base) {
     body2: base.body2.copyWith(
       fontWeight: FontWeight.w500,
       fontSize: 16.0,
+      color: Colors.white,
     ),
+    display4: base.display4.copyWith(
+      color: Colors.white,
+    )
   );
 }
