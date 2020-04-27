@@ -2,18 +2,28 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_list/core/base/base_view_model.dart';
-import 'package:app_list/core/services/local_storage_service.dart';
-import 'package:app_list/widgets/img_crop/img_crop_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:app_list/core/locator.dart';
+import 'package:app_list/core/services/custom_theme_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PersonViewModel extends BaseViewModel {
   PersonViewModel();
   var image;
+  bool isLightTheme = false;
 
   void initPage() async {
-    String base64String = LocalStorageService.getItem('avatar');
+    // init theme
+    bool theme = storageService.getItem('light_theme');
+    if (theme == null) {
+      isLightTheme = true;
+    } else {
+      isLightTheme = theme;
+    }
+
+    // init photo
+    String base64String = storageService.getItem('avatar');
+    if (base64String == null) return;
     var bytes = base64Decode(base64String);
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
@@ -26,15 +36,27 @@ class PersonViewModel extends BaseViewModel {
 
   Future getImage(context, type) async {
     navigation.pop();
-    image = await ImagePicker.pickImage(
+    var tempImage;
+    tempImage = await ImagePicker.pickImage(
       source: type == 'camera'
         ? ImageSource.camera
         : ImageSource.gallery,
     );
-    if (image == null) return;
-    image = await navigation.navigateToPage(MaterialPageRoute(builder: (context) => ImgCropWidget(image: image)));
-    String base64String = base64Encode(image.readAsBytesSync());
-    LocalStorageService.setItem('avatar', base64String);
+    if (tempImage == null) return;
+    tempImage = await navigation.navigateToCropImage(tempImage);
+    if (tempImage == null) return;
+    image = tempImage;
+    String base64String = base64Encode(tempImage.readAsBytesSync());
+    storageService.setItem('avatar', base64String);
+    notifyListeners();
+  }
+
+  void changeTheme() {
+    var themeController = locator<CustomThemeService>();
+    themeController.switchTheme();
+    bool theme = themeController.islightTheme;
+    isLightTheme = theme;
+    storageService.setItem('light_theme', theme);
     notifyListeners();
   }
   

@@ -1,3 +1,5 @@
+import 'package:app_list/widgets/img_crop/img_crop_widget.dart';
+
 import '../../core/base/base_service.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +33,10 @@ class NavigatorService extends BaseService {
       return;
     }
     navigatorKey.currentState.pop(result);
+  }
+
+  Future<T> navigateToCropImage<T>(image) async {
+    return await navigateToPage(MaterialPageRoute(builder: (context) => ImgCropWidget(image: image)));
   }
 
   

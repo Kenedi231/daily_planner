@@ -74,11 +74,11 @@ class _Person extends StatelessWidget {
           ),
           SizedBox(height: 50),
           GestureDetector(
-            onTap: () {
-
-            },
+            onTap: viewModel.changeTheme,
             child: Icon(
-              Icons.brightness_7,
+              viewModel.isLightTheme
+                ? Icons.brightness_7
+                : Icons.brightness_2,
               color: Theme.of(context).primaryColor,
               size: 100,
             ),

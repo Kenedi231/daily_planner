@@ -1,4 +1,3 @@
-import 'package:app_list/core/services/local_storage_service.dart';
 import 'package:app_list/theme/light.dart';
 import 'package:app_list/theme/night.dart';
 
@@ -10,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'views/home/home_view.dart';
 
 void main() async {
-  await LocalStorageService.init();
+  WidgetsFlutterBinding.ensureInitialized();
   await LocatorInjector.setupLocator();
   runApp(MainApplication());
 }
@@ -20,12 +19,11 @@ class MainApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: ProviderInjector.providers,
-      child: MaterialApp(
-        theme: nightTheme,
-        navigatorKey: locator<NavigatorService>().navigatorKey,
-        home: FutureBuilder(
-          future: LocalStorageService.storage.ready,
-          builder: (context, snapshot) => HomeView()
+      child: Consumer<bool>(
+        builder: (context, theme, child) => MaterialApp(
+          theme: theme ? lightTheme : nightTheme,
+          navigatorKey: locator<NavigatorService>().navigatorKey,
+          home: HomeView(),
         ),
       ),
     );
