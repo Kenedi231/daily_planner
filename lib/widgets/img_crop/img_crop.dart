@@ -23,6 +23,8 @@ class _ImgCrop extends StatelessWidget {
           image: FileImage(image),
         ),
       ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final crop = cropKey.currentState;
