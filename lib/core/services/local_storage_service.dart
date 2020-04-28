@@ -28,11 +28,6 @@ class LocalStorageService extends BaseService {
   if(content is List<String>) {
     _preferences.setStringList(key, content);
   }
-
-  void removeItem(String key) {
-    log.i('Remove item $key');
-    _preferences.remove(key);
-  }
 }
   static Future<LocalStorageService> getInstance() async {
     if (_instance == null) {
@@ -44,5 +39,10 @@ class LocalStorageService extends BaseService {
     }
 
     return _instance;
+  }
+
+  void removeItem(String key) {
+    log.i('Remove item $key');
+    _preferences.remove(key);
   }
 }

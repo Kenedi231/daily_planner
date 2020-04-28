@@ -8,13 +8,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PersonViewModel extends BaseViewModel {
+  static const LIGHT_THEME = 'light_theme';
+  static const AVATAR = 'avatar';
+
   PersonViewModel();
   var image;
   bool isLightTheme = false;
 
   void initPage() async {
     // init theme
-    bool theme = storageService.getItem('light_theme');
+    bool theme = storageService.getItem(LIGHT_THEME);
     if (theme == null) {
       isLightTheme = true;
     } else {
@@ -22,7 +25,7 @@ class PersonViewModel extends BaseViewModel {
     }
 
     // init photo
-    String base64String = storageService.getItem('avatar');
+    String base64String = storageService.getItem(AVATAR);
     if (base64String == null) return;
     var bytes = base64Decode(base64String);
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
@@ -46,9 +49,10 @@ class PersonViewModel extends BaseViewModel {
     tempImage = await navigation.navigateToCropImage(tempImage);
     if (tempImage == null) return;
     image = tempImage;
-    String base64String = base64Encode(tempImage.readAsBytesSync());
-    storageService.setItem('avatar', base64String);
     notifyListeners();
+    storageService.setItem(AVATAR, 'null');
+    String base64String = base64Encode(tempImage.readAsBytesSync());
+    storageService.setItem(AVATAR, base64String);
   }
 
   void changeTheme() {
@@ -56,7 +60,7 @@ class PersonViewModel extends BaseViewModel {
     themeController.switchTheme();
     bool theme = themeController.islightTheme;
     isLightTheme = theme;
-    storageService.setItem('light_theme', theme);
+    storageService.setItem(LIGHT_THEME, theme);
     notifyListeners();
   }
   

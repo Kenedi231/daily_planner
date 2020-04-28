@@ -11,6 +11,7 @@ ThemeData _lightTheme() {
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
+    buttonColor: Colors.redAccent,
     textTheme: _buildLightTextTheme(base.textTheme),
     primaryTextTheme: _buildLightTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildLightTextTheme(base.accentTextTheme),
@@ -28,10 +29,12 @@ TextTheme _buildLightTextTheme(TextTheme base) {
     caption: base.caption.copyWith(
       fontWeight: FontWeight.w400,
       fontSize: 14.0,
+      color: Colors.redAccent,
     ),
     body2: base.body2.copyWith(
       fontWeight: FontWeight.w500,
       fontSize: 16.0,
+      color: Colors.white,
     ),
   );
 }

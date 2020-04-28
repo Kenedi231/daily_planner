@@ -1,3 +1,4 @@
+import 'package:app_list/core/models/TodoModel.dart';
 import 'package:app_list/views/todo_item/todo_item_view.dart';
 import 'package:app_list/widgets/img_crop/img_crop_widget.dart';
 
@@ -40,8 +41,8 @@ class NavigatorService extends BaseService {
     return await navigateToPage(MaterialPageRoute(builder: (context) => ImgCropWidget(image: image)));
   }
 
-  Future<T> navigateToTODOItem<T>() async {
-    return await navigateToPage(MaterialPageRoute(builder: (context) => TodoItemView()));
+  Future<T> navigateToTODOItem<T>(TodoItemModel item) async {
+    return await navigateToPage(MaterialPageRoute(builder: (context) => TodoItemView(item: item)));
   }
 
   

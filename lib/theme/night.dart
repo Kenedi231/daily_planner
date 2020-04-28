@@ -14,6 +14,7 @@ ThemeData _nightTheme() {
     textTheme: _buildLightTextTheme(base.textTheme).apply(
       bodyColor: Colors.white,
     ),
+    buttonColor: Colors.blueAccent,
     primaryTextTheme: _buildLightTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildLightTextTheme(base.accentTextTheme),
     
@@ -31,6 +32,7 @@ TextTheme _buildLightTextTheme(TextTheme base) {
     caption: base.caption.copyWith(
       fontWeight: FontWeight.w400,
       fontSize: 14.0,
+      color: Colors.white,
     ),
     body2: base.body2.copyWith(
       fontWeight: FontWeight.w500,
