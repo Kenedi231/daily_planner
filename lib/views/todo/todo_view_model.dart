@@ -2,21 +2,37 @@ import 'dart:convert';
 
 import 'package:app_list/core/base/base_view_model.dart';
 import 'package:app_list/core/models/TodoModel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class TodoViewModel extends BaseViewModel {
   final key = 'todo_list';
 
   TodoViewModel();
   List<TodoItemModel> todoList = [];
+  GlobalKey<AnimatedListState> todoListKey = GlobalKey<AnimatedListState>();
+  ScrollController todoListController = new ScrollController();
+  bool floatingActionButtonVisible = true;
 
   void initViewModel() {
     todoList.clear();
     List<dynamic> todoListString = storageService.getItem(key);
     if (todoListString == null) return;
     for (var item in todoListString) {
-      print(item);
       todoList.add(TodoItemModel.fromJson(jsonDecode(item)));
     }
+    todoListController.addListener(() {
+      if (todoListController.position.userScrollDirection == ScrollDirection.reverse) {
+        if (!floatingActionButtonVisible) return;
+        floatingActionButtonVisible = false;
+        notifyListeners();
+      } else {
+        if (floatingActionButtonVisible) return;
+        floatingActionButtonVisible = true;
+        notifyListeners();
+      }
+    });
     notifyListeners();
   }
   
@@ -25,11 +41,13 @@ class TodoViewModel extends BaseViewModel {
     TodoItemModel item = await navigation.navigateToTODOItem(null);
     if  (item == null) return;
     todoList.add(item);
+    todoListKey.currentState.insertItem(todoList.length - 1, duration: Duration(microseconds: 0));
     notifyListeners();
     saveToStorage();
   }
 
-  void editItem(int index) async {
+  void editItem(TodoItemModel data) async {
+    var index = todoList.indexOf(data);
     TodoItemModel item = await navigation.navigateToTODOItem(todoList[index]);
     if (item == null) return;
     todoList[index] = item;
@@ -37,13 +55,18 @@ class TodoViewModel extends BaseViewModel {
     saveToStorage();
   }
 
-  void removeItem(int index) {
-    todoList.removeAt(index);
+  void removeItem(TodoItemModel data, Function buildItem) {
+    var index = todoList.indexOf(data);
+    var removeItem = todoList.removeAt(index);
+    todoListKey.currentState.removeItem(index, (context, animaniton) {
+      return buildItem(context, removeItem, animaniton); 
+    });
     notifyListeners();
     saveToStorage();
   }
   
-  void switchStatus(int index) {
+  void switchStatus(TodoItemModel data) {
+    var index = todoList.indexOf(data);
     todoList[index] = new TodoItemModel(
       todoList[index].title,
       todoList[index].date,
@@ -62,5 +85,11 @@ class TodoViewModel extends BaseViewModel {
     }
     print(todoListString.length);
     storageService.setItem(key, todoListString);
+  }
+
+  @override
+  void dispose() {
+    todoListController.dispose();
+    super.dispose();
   }
 }

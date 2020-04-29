@@ -1,5 +1,6 @@
 library todo_view;
 
+import 'package:app_list/core/models/TodoModel.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';
 import 'todo_view_model.dart';

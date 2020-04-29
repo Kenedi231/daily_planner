@@ -21,7 +21,7 @@ class _Home extends StatelessWidget {
         buttonBackgroundColor: Theme.of(context).primaryColor,
         color: Theme.of(context).primaryColor,
         items: <Widget>[
-          Icon(Icons.home, size: 30, color: Theme.of(context).iconTheme.color),
+          Icon(Icons.book, size: 30, color: Theme.of(context).iconTheme.color),
           Icon(Icons.list, size: 30, color: Theme.of(context).iconTheme.color),
           Icon(Icons.account_circle, size: 30, color: Theme.of(context).iconTheme.color),
         ],

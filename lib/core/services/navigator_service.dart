@@ -1,4 +1,5 @@
 import 'package:app_list/core/models/TodoModel.dart';
+import 'package:app_list/views/notes_item/notes_item_view.dart';
 import 'package:app_list/views/todo_item/todo_item_view.dart';
 import 'package:app_list/widgets/img_crop/img_crop_widget.dart';
 
@@ -43,6 +44,10 @@ class NavigatorService extends BaseService {
 
   Future<T> navigateToTODOItem<T>(TodoItemModel item) async {
     return await navigateToPage(MaterialPageRoute(builder: (context) => TodoItemView(item: item)));
+  }
+
+  Future<T> navigateToNotesItem<T>() async {
+    return await navigateToPage(MaterialPageRoute(builder: (context) => NotesItemView()));
   }
 
   

@@ -6,7 +6,12 @@ import 'notes_view_model.dart';
 
 part 'notes.dart';
 
-class NotesView extends StatelessWidget {
+class NotesView extends StatefulWidget {
+  @override
+  _NotesViewState createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> with AutomaticKeepAliveClientMixin<NotesView> {
   @override
   Widget build(BuildContext context) {
     NotesViewModel viewModel = NotesViewModel();
@@ -20,4 +25,7 @@ class NotesView extends StatelessWidget {
       }
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

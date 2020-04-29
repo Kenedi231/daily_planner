@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
 
 class TodoItemViewModel extends BaseViewModel {
-  String heroTag = 'todo-${randomString(10)}';
+  String heroTag = 'todo-${randomString(20)}';
 
   TodoItemViewModel();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
