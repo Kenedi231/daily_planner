@@ -5,41 +5,55 @@ class _Person extends StatelessWidget {
 
   _Person(this.viewModel);
 
-  void _showActionSheet(context) {
-    showModalBottomSheet(
-      context: context, 
-      builder: (context) {
-        return Container(
-          color: Theme.of(context).backgroundColor,
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                new ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('Camera'),
-                  onTap: () async {
-                    await viewModel.getImage(context, 'camera');
-                  },
-                ),
-                new ListTile(
-                  leading: Icon(Icons.photo_album),
-                  title: Text('Gallery'),
-                  onTap: () async {
-                    await viewModel.getImage(context, 'gallery');
-                  },
-                ),
-              ],
-            )
-          ),
-        );
-      }
-    );
+  void _showPhotoActionSheet(context) {
+    var i18n = AppLocalizations.of(context).translate;
+    showActionSheet(context, [
+      new ListTile(
+        leading: Icon(Icons.photo_camera),
+        title: Text(i18n('Camera')),
+        onTap: () async {
+          await viewModel.getImage(context, 'camera');
+        },
+      ),
+      new ListTile(
+        leading: Icon(Icons.photo_library),
+        title: Text(i18n('Gallery')),
+        onTap: () async {
+          await viewModel.getImage(context, 'gallery');
+        },
+      ),
+      new ListTile(
+        leading: Icon(Icons.close),
+        title: Text(i18n('Cancel')),
+        onTap: viewModel.closeAction,
+      ),
+    ]);
+  }
+
+  void _showLanguageActionSheet(context) {
+    var locales = AppLocalizations.locales;
+    var i18n = AppLocalizations.of(context).translate;
+    List<Widget> children = List<Widget>();
+    locales.forEach((item) {
+      children.add(new ListTile(
+        title: Text(item),
+        onTap: () {
+          viewModel.changeLocale(item);
+          viewModel.closeAction();
+        }
+      ));
+    });
+    children.add(new ListTile(
+      title: Text(i18n('Cancel')),
+      onTap: viewModel.closeAction,
+    ));
+    showActionSheet(context, children);
   }
 
 
   @override
   Widget build(BuildContext context) {
+    var i18n = AppLocalizations.of(context).translate;
     return Container(
       margin: EdgeInsets.all(0),
       color: Theme.of(context).backgroundColor,
@@ -50,7 +64,7 @@ class _Person extends StatelessWidget {
           Center(
             child: GestureDetector(
               onTap: () {
-                _showActionSheet(context);
+                _showPhotoActionSheet(context);
               },
               child: CircleAvatar(
                 backgroundImage: viewModel.image == null 
@@ -81,6 +95,19 @@ class _Person extends StatelessWidget {
                 : Icons.brightness_2,
               color: Theme.of(context).primaryColor,
               size: 100,
+            ),
+          ),
+          SizedBox(height: 20),
+          RaisedButton(
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              _showLanguageActionSheet(context);
+            },
+            child: Text(
+              i18n('Change language'),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.body2.color,
+              ),
             ),
           ),
         ],

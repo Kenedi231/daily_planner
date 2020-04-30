@@ -1,5 +1,7 @@
 library person_view;
 
+import 'package:app_list/core/services/localization/app_localization.dart';
+import 'package:app_list/utils/model_bottom_sheet.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';
 import 'person_view_model.dart';

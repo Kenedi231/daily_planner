@@ -1,5 +1,6 @@
 library home_view;
 
+import 'package:app_list/core/services/localization/app_localization.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';

@@ -8,6 +8,7 @@ class _TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var i18n = AppLocalizations.of(context).translate;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -31,7 +32,7 @@ class _TodoItem extends StatelessWidget {
                       child: TextFormField(
                         controller: viewModel.todoController,
                         decoration: InputDecoration(
-                          labelText: 'Enter todo',
+                          labelText: i18n('Enter todo'),
                           labelStyle: TextStyle(
                             fontSize: 22,
                             color: Theme.of(context).textTheme.caption.color,
@@ -74,7 +75,7 @@ class _TodoItem extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  'Save',
+                  i18n('Save'),
                   style: TextStyle(
                     color: Theme.of(context).textTheme.body2.color,
                   ),

@@ -1,3 +1,4 @@
+import 'package:app_list/core/models/NoteModel.dart';
 import 'package:app_list/core/models/TodoModel.dart';
 import 'package:app_list/views/notes_item/notes_item_view.dart';
 import 'package:app_list/views/todo_item/todo_item_view.dart';
@@ -46,8 +47,8 @@ class NavigatorService extends BaseService {
     return await navigateToPage(MaterialPageRoute(builder: (context) => TodoItemView(item: item)));
   }
 
-  Future<T> navigateToNotesItem<T>() async {
-    return await navigateToPage(MaterialPageRoute(builder: (context) => NotesItemView()));
+  Future<T> navigateToNotesItem<T>(NoteModel item) async {
+    return await navigateToPage(MaterialPageRoute(builder: (context) => NotesItemView(item: item)));
   }
 
   

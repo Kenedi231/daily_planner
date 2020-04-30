@@ -8,9 +8,10 @@ class _ImgCrop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var i18n = AppLocalizations.of(context).translate;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Zoom and crop'),
+        title: Text(i18n('Zoom and crop')),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -31,7 +32,7 @@ class _ImgCrop extends StatelessWidget {
           final croppedFile = await crop.cropCompleted(image, pictureQuality: 600);
           locator<NavigatorService>().pop(croppedFile);
         },
-        child: Text('Crop'),
+        child: Text(i18n('Crop')),
       ),
     );
   }

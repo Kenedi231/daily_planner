@@ -1,3 +1,5 @@
+import 'package:app_list/core/services/localization/app_localization.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app_list/theme/light.dart';
 import 'package:app_list/theme/night.dart';
 
@@ -20,10 +22,22 @@ class MainApplication extends StatelessWidget {
     return MultiProvider(
       providers: ProviderInjector.providers,
       child: Consumer<bool>(
-        builder: (context, theme, child) => MaterialApp(
-          theme: theme ? lightTheme : nightTheme,
-          navigatorKey: locator<NavigatorService>().navigatorKey,
-          home: HomeView(),
+        builder: (context, theme, child) => Consumer<Locale>(
+          builder: (context, appLocale, child) => MaterialApp(
+            locale: appLocale,
+            supportedLocales: [
+              Locale('en', 'US'),
+              Locale('ru', 'RU'),
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            theme: theme ?? true ? lightTheme : nightTheme,
+            navigatorKey: locator<NavigatorService>().navigatorKey,
+            home: HomeView(),
+          ),
         ),
       ),
     );

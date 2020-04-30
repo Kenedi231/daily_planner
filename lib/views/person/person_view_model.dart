@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:app_list/core/base/base_view_model.dart';
 import 'package:app_list/core/locator.dart';
 import 'package:app_list/core/services/custom_theme_service.dart';
+import 'package:app_list/core/services/localization/app_language.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -63,6 +64,16 @@ class PersonViewModel extends BaseViewModel {
     storageService.setItem(LIGHT_THEME, theme);
     notifyListeners();
   }
+
+  void changeLocale(String locale) {
+    var localeController = locator<AppLanguage>();
+    localeController.changeLanguage(locale);
+    notifyListeners();
+  }
   
+
+  void closeAction() {
+    navigation.pop();
+  }
   // Add ViewModel specific code here
 }

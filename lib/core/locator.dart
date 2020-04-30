@@ -1,5 +1,6 @@
 import 'package:app_list/core/services/custom_theme_service.dart';
 import 'package:app_list/core/services/local_storage_service.dart';
+import 'package:app_list/core/services/localization/app_language.dart';
 
 import '../core/logger.dart';
 import '../core/services/navigator_service.dart';
@@ -19,5 +20,7 @@ class LocatorInjector {
     locator.registerSingleton<LocalStorageService>(instance);
     _log.d('Initializing Custom Theme Service');
     locator.registerSingleton<CustomThemeService>(CustomThemeService());
+    _log.d('Initializing Localization Service');
+    locator.registerSingleton<AppLanguage>(AppLanguage());
   }
 }

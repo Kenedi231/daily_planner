@@ -7,10 +7,11 @@ class _Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var i18n = AppLocalizations.of(context).translate;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('Daily planner'),
+        title: Text(i18n('Daily planner')),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
       ),

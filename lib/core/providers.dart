@@ -1,5 +1,7 @@
 import 'package:app_list/core/services/custom_theme_service.dart';
 import 'package:app_list/core/services/local_storage_service.dart';
+import 'package:app_list/core/services/localization/app_language.dart';
+import 'package:flutter/material.dart';
 
 import '../core/locator.dart';
 import '../core/services/navigator_service.dart';
@@ -23,5 +25,8 @@ class ProviderInjector {
     StreamProvider<bool>(
       create: (context) => locator<CustomThemeService>().theme,
     ),
+    StreamProvider<Locale>(
+      create: (context) => locator<AppLanguage>().appLocale,
+    )
   ];
 }
