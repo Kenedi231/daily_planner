@@ -41,6 +41,9 @@ TextTheme _buildLightTextTheme(TextTheme base) {
     ),
     display4: base.display4.copyWith(
       color: Colors.white,
-    )
+    ),
+    display1: base.display1.copyWith(
+      color: Colors.grey[300],
+    ),
   );
 }

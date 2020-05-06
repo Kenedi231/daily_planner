@@ -40,8 +40,8 @@ class TodoViewModel extends BaseViewModel {
   void createNewTodo() async {
     TodoItemModel item = await navigation.navigateToTODOItem(null);
     if  (item == null) return;
-    todoList.add(item);
-    todoListKey.currentState.insertItem(todoList.length - 1, duration: Duration(microseconds: 0));
+    todoList.insert(0, item);
+    todoListKey.currentState.insertItem(0, duration: Duration(microseconds: 0));
     notifyListeners();
     saveToStorage();
   }

@@ -36,5 +36,8 @@ TextTheme _buildLightTextTheme(TextTheme base) {
       fontSize: 16.0,
       color: Colors.white,
     ),
+    display1: base.display1.copyWith(
+      color: Colors.grey[300],
+    ),
   );
 }

@@ -26,13 +26,13 @@ class _ImgCrop extends StatelessWidget {
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final crop = cropKey.currentState;
           final croppedFile = await crop.cropCompleted(image, pictureQuality: 600);
           locator<NavigatorService>().pop(croppedFile);
         },
-        child: Text(i18n('Crop')),
+        label: Text(i18n('Crop')),
       ),
     );
   }

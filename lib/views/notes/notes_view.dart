@@ -24,7 +24,7 @@ class _NotesViewState extends State<NotesView> with AutomaticKeepAliveClientMixi
       },
       builder: (context, viewModel, child) {
         return _Notes(viewModel);
-      }
+      },
     );
   }
 

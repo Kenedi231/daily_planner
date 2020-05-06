@@ -14,6 +14,8 @@ class AppLanguage extends ChangeNotifier {
 
   Stream<Locale> get appLocale => _appLocaleController.stream;
 
+  Locale get currentLocale => _appLocale;
+
   AppLanguage() {
     var code = locator<LocalStorageService>().getItem(LANGUAGE_KEY);
     if (code == null) {
