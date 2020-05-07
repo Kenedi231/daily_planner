@@ -32,6 +32,31 @@ class _NotesItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.bookmark_border),
+                  SizedBox(width: 10),
+                  DropdownButton(
+                    value: viewModel.currentValue,
+                    icon: Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    iconEnabledColor: Theme.of(context).primaryColor,
+                    dropdownColor: Theme.of(context).primaryColor,
+                    isExpanded: false,
+                    onChanged: (String newValue) {
+                      viewModel.setCurrentValue = newValue;
+                    },
+                    underline: SizedBox(height: 0),
+                    items: viewModel.categories.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value)
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
               Expanded(
                 flex: 1,
                 child: SingleChildScrollView(

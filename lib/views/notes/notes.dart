@@ -72,17 +72,50 @@ class _Notes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var i18n = AppLocalizations.of(context).translate;
+    var i18n = AppLocalizations.of(context).translate;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: AnimatedList(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 60),
-        key: viewModel.noteListKey,
-        initialItemCount: viewModel.listNotes.length,
-        itemBuilder: (context, index, animation) {
-          return buildItem(context, viewModel.listNotes[index], animation, viewModel.listForDelete.contains(index));
-        }
+      body: Column(
+        children: <Widget>[
+          viewModel.deleteMode
+            ? Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('${viewModel.listForDelete.length == 0 ? i18n('None') : viewModel.listForDelete.length} ${i18n('selected')}'),
+                    RaisedButton(
+                      elevation: 0.0,
+                      focusElevation: 0.0, 
+                      color: Theme.of(context).backgroundColor,
+                      onPressed: viewModel.disableDeleteMode,
+                      child: Text(
+                        i18n('cancel'),
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.body2.color,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ) : SizedBox(),
+          Expanded(
+            flex: 20,
+            child: AnimatedList(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 60),
+              key: viewModel.noteListKey,
+              initialItemCount: viewModel.listNotes.length,
+              itemBuilder: (context, index, animation) {
+                return buildItem(context, viewModel.listNotes[index], animation, viewModel.listForDelete.contains(index));
+              }
+            ),
+          ),
+        ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (viewModel.deleteMode) {
@@ -94,7 +127,7 @@ class _Notes extends StatelessWidget {
         child: Icon(
           viewModel.deleteMode ? Icons.delete : Icons.add,
           size: 40,
-          color: Theme.of(context).iconTheme.color
+          color: Theme.of(context).iconTheme.color,
         ),
         backgroundColor: Theme.of(context).primaryColor,
         heroTag: 'note-create',

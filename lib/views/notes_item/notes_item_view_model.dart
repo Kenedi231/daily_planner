@@ -7,6 +7,14 @@ import 'package:random_string/random_string.dart';
 class NotesItemViewModel extends BaseViewModel {
   String heroTag = 'note-${randomString(20)}';
 
+  List<String> categories = ['Work', 'Life', 'Personal', 'No category'];
+  String currentValue = 'No category';
+
+  set setCurrentValue(String value) {
+    currentValue = value;
+    notifyListeners();
+  }
+
   NotesItemViewModel();
   
   FocusNode focusNode = FocusNode();
@@ -22,10 +30,9 @@ class NotesItemViewModel extends BaseViewModel {
     String title = noteController.text;
     if (title.length > 70) {
       title = title.substring(0, 70);
-      title += '...';
     }
     print(title);
-    NoteModel newNote = NoteModel(title, DateTime.now().toString(), noteController.text, 'no', heroTag);
+    NoteModel newNote = NoteModel(title, DateTime.now().toString(), noteController.text, null, heroTag);
     navigation.pop(newNote);
   }
   

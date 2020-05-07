@@ -18,7 +18,7 @@ class _Home extends StatelessWidget {
       bottomNavigationBar: CurvedNavigationBar(
         animationDuration: Duration(milliseconds: 300),
         height: 50,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Colors.transparent,
         buttonBackgroundColor: Theme.of(context).primaryColor,
         color: Theme.of(context).primaryColor,
         items: <Widget>[
