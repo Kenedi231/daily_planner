@@ -77,7 +77,7 @@ class _TodoItem extends StatelessWidget {
                 child: Text(
                   i18n('Save'),
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.body2.color,
+                    color: Theme.of(context).textTheme.bodyText2.color,
                   ),
                 ),
                 elevation: 5.0,

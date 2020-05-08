@@ -106,7 +106,7 @@ class _Person extends StatelessWidget {
             child: Text(
               i18n('Change language'),
               style: TextStyle(
-                color: Theme.of(context).textTheme.body2.color,
+                color: Theme.of(context).textTheme.bodyText2.color,
               ),
             ),
           ),

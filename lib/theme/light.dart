@@ -20,10 +20,11 @@ ThemeData _lightTheme() {
 
 TextTheme _buildLightTextTheme(TextTheme base) {
   return base.copyWith(
-    headline: base.headline.copyWith(
+    headline5: base.headline5.copyWith(
       fontWeight: FontWeight.w500,
+      color: Colors.black,
     ),
-    title: base.title.copyWith(
+    headline6: base.headline6.copyWith(
       color: Colors.white,
     ),
     caption: base.caption.copyWith(
@@ -31,12 +32,12 @@ TextTheme _buildLightTextTheme(TextTheme base) {
       fontSize: 14.0,
       color: Colors.redAccent,
     ),
-    body2: base.body2.copyWith(
+    bodyText2: base.bodyText2.copyWith(
       fontWeight: FontWeight.w500,
       fontSize: 16.0,
       color: Colors.white,
     ),
-    display1: base.display1.copyWith(
+    headline4: base.headline4.copyWith(
       color: Colors.grey[300],
     ),
   );

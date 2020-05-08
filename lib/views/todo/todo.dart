@@ -17,7 +17,7 @@ class _Todo extends StatelessWidget {
             child: ListTile(
               leading: Theme(
                 data: Theme.of(context).copyWith(
-                  unselectedWidgetColor: Theme.of(context).textTheme.body2.color,
+                  unselectedWidgetColor: Theme.of(context).textTheme.bodyText2.color,
                 ),
                 child: Checkbox(
                   activeColor: Theme.of(context).primaryColor,
@@ -33,13 +33,13 @@ class _Todo extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.delete,
-                  color: Theme.of(context).textTheme.body2.color,
+                  color: Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
               title: Text(
                 item.title,
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.body2.color,
+                  color: Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
               onTap: () {

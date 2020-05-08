@@ -13,7 +13,7 @@ class _Notes extends StatelessWidget {
         child: Hero(
           tag: item.heroTag,
           child: Card(
-            color: Theme.of(context).primaryColor,
+            color: item?.category?.color ?? Theme.of(context).primaryColor,
             child: ListTile(
               onLongPress: () {
                 viewModel.multipleDelete(item);
@@ -24,7 +24,7 @@ class _Notes extends StatelessWidget {
                   item.title,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Theme.of(context).textTheme.body2.color,
+                    color: Theme.of(context).textTheme.bodyText2.color,
                   ),
                 ),
               ),
@@ -33,7 +33,7 @@ class _Notes extends StatelessWidget {
                 child: Text(
                   viewModel.dateFormating(item.date),
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.display1.color,
+                    color: Theme.of(context).textTheme.headline4.color,
                     fontSize: 16,
                   ),
                 ),
@@ -41,7 +41,7 @@ class _Notes extends StatelessWidget {
               trailing: viewModel.deleteMode
                 ? Theme(
                   data: Theme.of(context).copyWith(
-                    unselectedWidgetColor: Theme.of(context).textTheme.body2.color,
+                    unselectedWidgetColor: Theme.of(context).textTheme.bodyText2.color,
                   ),
                   child: Checkbox(
                     activeColor: Theme.of(context).primaryColor,
@@ -57,7 +57,7 @@ class _Notes extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.delete,
-                    color: Theme.of(context).textTheme.body2.color,
+                    color: Theme.of(context).textTheme.bodyText2.color,
                   ),
                 ),
               onTap: () {
@@ -88,20 +88,20 @@ class _Notes extends StatelessWidget {
                     Text('${viewModel.listForDelete.length == 0 ? i18n('None') : viewModel.listForDelete.length} ${i18n('selected')}'),
                     RaisedButton(
                       elevation: 0.0,
-                      focusElevation: 0.0, 
+                      focusElevation: 0.0,
                       color: Theme.of(context).backgroundColor,
                       onPressed: viewModel.disableDeleteMode,
                       child: Text(
                         i18n('cancel'),
                         style: TextStyle(
-                          color: Theme.of(context).textTheme.body2.color,
+                          color: Theme.of(context).textTheme.bodyText2.color,
                         ),
                       ),
                     ),
                   ],
                 ),
               )
-            ) : SizedBox(),
+            ) : DropdownDialog(viewModel: viewModel),
           Expanded(
             flex: 20,
             child: AnimatedList(
@@ -132,6 +132,37 @@ class _Notes extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         heroTag: 'note-create',
       ),
+    );
+  }
+}
+
+class DropdownDialog extends StatelessWidget {
+  const DropdownDialog({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+  final NotesViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownDialogWidget(
+      items: viewModel.categories.map<DropdownMenuItem<CategoryModel>>((CategoryModel item) {
+        return DropdownMenuItem<CategoryModel>(
+          child: Row(
+            children: <Widget>[
+              Icon(item.icon, color: item.color),
+              SizedBox(width: 10),
+              Text(item.name),
+            ],
+          ),
+          value: item,
+        );
+      }).toList(),
+      selectedValue: viewModel.currentCategory,
+      onChanged: (value) {
+        viewModel.category = value ?? viewModel.currentCategory;
+      },
+      search: viewModel.searchCategory,
     );
   }
 }

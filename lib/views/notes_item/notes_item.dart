@@ -18,7 +18,7 @@ class _NotesItem extends StatelessWidget {
           IconButton(
             icon: Hero(
               tag: 'note-create',
-              child: Icon(Icons.done, size: 30, color: Theme.of(context).textTheme.title.color)
+              child: Icon(Icons.done, size: 30, color: Theme.of(context).textTheme.headline6.color)
             ),
             onPressed: viewModel.saveNote,
           ),
@@ -34,26 +34,19 @@ class _NotesItem extends StatelessWidget {
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Icon(Icons.bookmark_border),
-                  SizedBox(width: 10),
-                  DropdownButton(
-                    value: viewModel.currentValue,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    iconEnabledColor: Theme.of(context).primaryColor,
-                    dropdownColor: Theme.of(context).primaryColor,
-                    isExpanded: false,
-                    onChanged: (String newValue) {
-                      viewModel.setCurrentValue = newValue;
-                    },
-                    underline: SizedBox(height: 0),
-                    items: viewModel.categories.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value)
-                      );
-                    }).toList(),
+                  Row(
+                    children: <Widget>[
+                      Icon(viewModel.currentValue.icon, color: viewModel.currentValue.color),
+                      DropdownDialog(viewModel: viewModel),
+                    ],
+                  ),
+                  Text(
+                    viewModel.dateFormating(viewModel.dateNow),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.headline5.color,
+                    ),
                   ),
                 ],
               ),
@@ -81,6 +74,37 @@ class _NotesItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DropdownDialog extends StatelessWidget {
+  const DropdownDialog({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+  final NotesItemViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownDialogWidget(
+      items: viewModel.categories.map<DropdownMenuItem<CategoryModel>>((CategoryModel item) {
+        return DropdownMenuItem<CategoryModel>(
+          child: Row(
+            children: <Widget>[
+              Icon(item.icon, color: item.color),
+              SizedBox(width: 10),
+              Text(item.name),
+            ],
+          ),
+          value: item,
+        );
+      }).toList(),
+      selectedValue: viewModel.currentValue,
+      onChanged: (value) {
+        viewModel.setCurrentValue = value ?? viewModel.currentValue;
+      },
+      search: viewModel.searchCategory,
     );
   }
 }
