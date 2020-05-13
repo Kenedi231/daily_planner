@@ -3,6 +3,7 @@ library notes_view;
 import 'package:app_list/core/models/CategoryModel.dart';
 import 'package:app_list/core/models/NoteModel.dart';
 import 'package:app_list/core/services/localization/app_localization.dart';
+import 'package:app_list/utils/add_new_category.dart';
 import 'package:app_list/widgets/dropdown_dialog/dropdown_dialog_widget.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> with AutomaticKeepAliveClientMixin<NotesView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     NotesViewModel viewModel = NotesViewModel();
     return ViewModelProvider<NotesViewModel>.withConsumer(
       viewModel: viewModel,

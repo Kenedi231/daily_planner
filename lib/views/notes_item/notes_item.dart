@@ -104,7 +104,6 @@ class DropdownDialog extends StatelessWidget {
       onChanged: (value) {
         viewModel.setCurrentValue = value ?? viewModel.currentValue;
       },
-      search: viewModel.searchCategory,
     );
   }
 }

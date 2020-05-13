@@ -19,11 +19,7 @@ class PersonViewModel extends BaseViewModel {
   void initPage() async {
     // init theme
     bool theme = storageService.getItem(LIGHT_THEME);
-    if (theme == null) {
-      isLightTheme = true;
-    } else {
-      isLightTheme = theme;
-    }
+    isLightTheme = theme == null;
 
     // init photo
     String base64String = storageService.getItem(AVATAR);

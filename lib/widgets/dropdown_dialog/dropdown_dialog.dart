@@ -4,14 +4,33 @@ class _DropdownDialog extends StatelessWidget {
   final List<DropdownMenuItem<dynamic>> items;
   final dynamic selectedValue;
   final Function onChanged;
-  final Function search;
 
-  const _DropdownDialog({Key key, this.items, this.selectedValue, this.onChanged, this.search}) : super(key: key);
+  const _DropdownDialog({Key key, this.items, this.selectedValue, this.onChanged}) : super(key: key);
+
+  List<int> searchCategory (String keyword, items) {
+    List<int> result = List<int>();
+    if (keyword != null && items != null) {
+      keyword.split(' ').forEach((k) {
+        int i = 0;
+        items.forEach((item) {
+          if (keyword.isEmpty || (k.isNotEmpty &&
+              (item.value.name.toString().toLowerCase().contains(k.toLowerCase())))) {
+            result.add(i);
+          }
+          i++;
+        });
+      });
+    }
+
+    if(keyword.isEmpty){
+      result = Iterable<int>.generate(items.length).toList();
+    }
+    return (result);
+  }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context).translate;
-    print(selectedValue);
     return SearchableDropdown(
       icon: Icon(Icons.arrow_drop_down),
       iconEnabledColor: Theme.of(context).primaryColor,
@@ -43,11 +62,10 @@ class _DropdownDialog extends StatelessWidget {
       items: items,
       value: selectedValue,
       selectedValueWidgetFn: (value) {
-        print(value);
         return Text(value.name);
       },
       onChanged: onChanged,
-      searchFn: search,
+      searchFn: searchCategory,
     );
   }
 }

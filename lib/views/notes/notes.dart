@@ -101,7 +101,7 @@ class _Notes extends StatelessWidget {
                   ],
                 ),
               )
-            ) : DropdownDialog(viewModel: viewModel),
+            ) : DropdownDialog(viewModel: viewModel, buildItem: buildItem),
           Expanded(
             flex: 20,
             child: AnimatedList(
@@ -121,7 +121,10 @@ class _Notes extends StatelessWidget {
           if (viewModel.deleteMode) {
             viewModel.runMultipleDelete(buildItem);
           } else {
-            viewModel.createNewNotes();
+            // TODO: Temporary solution
+            showNewCategorySheet(context);
+            // viewModel.setCategory(viewModel.categories[0], buildItem);
+            // viewModel.createNewNotes();
           }
         },
         child: Icon(
@@ -140,8 +143,10 @@ class DropdownDialog extends StatelessWidget {
   const DropdownDialog({
     Key key,
     @required this.viewModel,
+    @required this.buildItem,
   }) : super(key: key);
   final NotesViewModel viewModel;
+  final Function buildItem;
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +165,8 @@ class DropdownDialog extends StatelessWidget {
       }).toList(),
       selectedValue: viewModel.currentCategory,
       onChanged: (value) {
-        viewModel.category = value ?? viewModel.currentCategory;
+        viewModel.setCategory(value ?? viewModel.currentCategory, buildItem);
       },
-      search: viewModel.searchCategory,
     );
   }
 }

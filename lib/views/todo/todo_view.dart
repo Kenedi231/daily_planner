@@ -17,6 +17,7 @@ class _TodoViewState extends State<TodoView> with AutomaticKeepAliveClientMixin<
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     TodoViewModel viewModel = TodoViewModel();
     return ViewModelProvider<TodoViewModel>.withConsumer(
       viewModel: viewModel,

@@ -15,10 +15,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin<HomeView> {
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     HomeViewModel viewModel = HomeViewModel();
     return ViewModelProvider<HomeViewModel>.withConsumer(
       viewModel: viewModel,
@@ -30,4 +28,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin<
       }
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

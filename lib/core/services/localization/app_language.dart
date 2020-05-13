@@ -7,7 +7,7 @@ import 'package:app_list/core/services/localization/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppLanguage extends ChangeNotifier {
-  final LANGUAGE_KEY = 'language_code';
+  final languageKey = 'language_code';
   Locale _appLocale = Locale('en');
 
   StreamController<Locale> _appLocaleController = StreamController<Locale>();
@@ -17,7 +17,7 @@ class AppLanguage extends ChangeNotifier {
   Locale get currentLocale => _appLocale;
 
   AppLanguage() {
-    var code = locator<LocalStorageService>().getItem(LANGUAGE_KEY);
+    var code = locator<LocalStorageService>().getItem(languageKey);
     if (code == null) {
       _appLocale = Locale('en');
       _appLocaleController.add(_appLocale);
@@ -35,7 +35,7 @@ class AppLanguage extends ChangeNotifier {
     if (AppLocalizations.delegate.isSupported(Locale(type))) {
       _appLocale = Locale(type);
       _appLocaleController.add(_appLocale);
-      storageService.setItem(LANGUAGE_KEY, type);
+      storageService.setItem(languageKey, type);
     }
     notifyListeners();
   }

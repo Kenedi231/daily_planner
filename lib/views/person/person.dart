@@ -7,27 +7,30 @@ class _Person extends StatelessWidget {
 
   void _showPhotoActionSheet(context) {
     var i18n = AppLocalizations.of(context).translate;
-    showActionSheet(context, [
-      new ListTile(
-        leading: Icon(Icons.photo_camera),
-        title: Text(i18n('Camera')),
-        onTap: () async {
-          await viewModel.getImage(context, 'camera');
-        },
-      ),
-      new ListTile(
-        leading: Icon(Icons.photo_library),
-        title: Text(i18n('Gallery')),
-        onTap: () async {
-          await viewModel.getImage(context, 'gallery');
-        },
-      ),
-      new ListTile(
-        leading: Icon(Icons.close),
-        title: Text(i18n('Cancel')),
-        onTap: viewModel.closeAction,
-      ),
-    ]);
+    showActionSheet(context, Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        new ListTile(
+          leading: Icon(Icons.photo_camera),
+          title: Text(i18n('Camera')),
+          onTap: () async {
+            await viewModel.getImage(context, 'camera');
+          },
+        ),
+        new ListTile(
+          leading: Icon(Icons.photo_library),
+          title: Text(i18n('Gallery')),
+          onTap: () async {
+            await viewModel.getImage(context, 'gallery');
+          },
+        ),
+        new ListTile(
+          leading: Icon(Icons.close),
+          title: Text(i18n('Cancel')),
+          onTap: viewModel.closeAction,
+        ),
+      ]
+    ));
   }
 
   void _showLanguageActionSheet(context) {
@@ -47,7 +50,10 @@ class _Person extends StatelessWidget {
       title: Text(i18n('Cancel')),
       onTap: viewModel.closeAction,
     ));
-    showActionSheet(context, children);
+    showActionSheet(context, Column(
+      mainAxisSize: MainAxisSize.min,
+      children: children,
+    ));
   }
 
 

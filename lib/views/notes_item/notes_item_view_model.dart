@@ -86,27 +86,6 @@ class NotesItemViewModel extends BaseViewModel {
     SystemChannels.textInput.invokeMethod('TextInput.show');
   }
 
-  List<int> searchCategory (String keyword, items) {
-    List<int> result = List<int>();
-    if (keyword != null && items != null) {
-      keyword.split(" ").forEach((k) {
-        int i = 0;
-        items.forEach((item) {
-          if (keyword.isEmpty || (k.isNotEmpty &&
-              (item.value.name.toString().toLowerCase().contains(k.toLowerCase())))) {
-            result.add(i);
-          }
-          i++;
-        });
-      });
-    }
-
-    if(keyword.isEmpty){
-      result = Iterable<int>.generate(items.length).toList();
-    }
-    return (result);
-  }
-
   @override
   void dispose() {
     focusNode.dispose();

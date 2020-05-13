@@ -48,7 +48,7 @@ class _TodoItem extends StatelessWidget {
                         autofocus: true,
                         validator: (String value) {
                           if (value.isEmpty) {
-                            return 'Please, enter some text';
+                            return i18n('Please, enter some text');
                           }
                           return null;
                         }

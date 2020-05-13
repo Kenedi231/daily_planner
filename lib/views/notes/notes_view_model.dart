@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 class NotesViewModel extends BaseViewModel {
   NotesViewModel();
 
+  // TODO: Get from storage and remote it
   List<CategoryModel> categories = [
     CategoryModel(
       icon: Icons.bookmark_border,
@@ -39,6 +40,7 @@ class NotesViewModel extends BaseViewModel {
 
   bool deleteMode = false;
   CategoryModel currentCategory;
+  List<NoteModel> allNotes;
   List<NoteModel> listNotes = List<NoteModel>();
   List<int> listForDelete = List<int>();
   GlobalKey<AnimatedListState> noteListKey = GlobalKey<AnimatedListState>();
@@ -52,33 +54,39 @@ class NotesViewModel extends BaseViewModel {
       listNotes.add(NoteModel.fromJson(jsonDecode(item)));
     }
     sortNotes();
+    allNotes = [...listNotes];
     notifyListeners();
   }
 
-  set category(CategoryModel value) {
+  void setCategory(CategoryModel value, Function buildItem) {
     currentCategory = value;
+    filterByCategory(buildItem);
+    sortNotes();
     notifyListeners();
   }
 
-  List<int> searchCategory (String keyword, items) {
-    List<int> result = List<int>();
-    if (keyword != null && items != null) {
-      keyword.split(" ").forEach((k) {
-        int i = 0;
-        items.forEach((item) {
-          if (keyword.isEmpty || (k.isNotEmpty &&
-              (item.value.name.toString().toLowerCase().contains(k.toLowerCase())))) {
-            result.add(i);
-          }
-          i++;
-        });
-      });
+  void filterByCategory(Function buildItem) {
+    if (currentCategory.name == 'All notes') {
+      for (var item in allNotes) {
+        if (!listNotes.contains(item)) {
+          listNotes.add(item);
+          noteListKey.currentState.insertItem(listNotes.length - 1, duration: Duration(microseconds: 200));
+        }
+      }
+    } else {
+      for (var item in allNotes) {
+        if (!listNotes.contains(item) && item.category?.name == currentCategory.name) {
+          listNotes.add(item);
+          noteListKey.currentState.insertItem(listNotes.length - 1, duration: Duration(microseconds: 0));
+        } else if (listNotes.contains(item) && item.category?.name != currentCategory.name) {
+          var index = listNotes.indexOf(item);
+          var removeItem = listNotes.removeAt(index);
+          noteListKey.currentState.removeItem(index, (context, animaniton) {
+            return buildItem(context, removeItem, animaniton, false); 
+          });
+        }
+      }
     }
-
-    if(keyword.isEmpty){
-      result = Iterable<int>.generate(items.length).toList();
-    }
-    return (result);
   }
 
   void disableDeleteMode() {
@@ -118,6 +126,7 @@ class NotesViewModel extends BaseViewModel {
     if (item == null) return;
     listNotes.add(item);
     noteListKey.currentState.insertItem(listNotes.length - 1, duration: Duration(microseconds: 0));
+    allNotes = [...listNotes];
     sortNotes();
     notifyListeners();
     saveToStorage();
@@ -134,14 +143,19 @@ class NotesViewModel extends BaseViewModel {
     } else {
       NoteModel item = await navigation.navigateToNotesItem(listNotes[index]);
       if (item == null) return;
+      var indexFromAll = allNotes.indexOf(listNotes[index]);
+      allNotes[indexFromAll] = item;
       listNotes[index] = item;
       saveToStorage();
+      sortNotes();
     }
     notifyListeners();
   }
 
   void removeItem(NoteModel data, Function buildItem) {
     var index = listNotes.indexOf(data);
+    var indexFromAll = allNotes.indexOf(data);
+    allNotes.removeAt(indexFromAll);
     var removeItem = listNotes.removeAt(index);
     noteListKey.currentState.removeItem(index, (context, animaniton) {
       return buildItem(context, removeItem, animaniton, false); 
@@ -155,7 +169,6 @@ class NotesViewModel extends BaseViewModel {
     for (var item in listNotes) {
       noteListString.add(jsonEncode(item.toJson()));
     }
-    print(noteListString.length);
     storageService.setItem(key, noteListString);
   }
 

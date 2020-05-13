@@ -19,6 +19,7 @@ class _PersonViewState extends State<PersonView> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     PersonViewModel viewModel = PersonViewModel();
     return ViewModelProvider<PersonViewModel>.withConsumer(
       viewModel: viewModel,
