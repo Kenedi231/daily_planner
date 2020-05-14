@@ -101,8 +101,14 @@ class DropdownDialog extends StatelessWidget {
         );
       }).toList(),
       selectedValue: viewModel.currentValue,
-      onChanged: (value) {
-        viewModel.setCurrentValue = value ?? viewModel.currentValue;
+      onChanged: (value) async {
+        if (value?.name == 'New') {
+          viewModel.setCurrentValue = viewModel.currentValue;
+          await showNewCategorySheet(context);
+          viewModel.updateCategory();
+        } else {
+          viewModel.setCurrentValue = value ?? viewModel.currentValue;
+        }
       },
     );
   }

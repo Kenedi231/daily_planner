@@ -88,6 +88,7 @@ class _Person extends StatelessWidget {
           Text(
             'Claire Rain',
             style: TextStyle(
+              color: Theme.of(context).textTheme.headline5.color,
               fontSize: 30,
               letterSpacing: 2.0,
             ),

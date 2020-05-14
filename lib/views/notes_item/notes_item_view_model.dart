@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_list/core/base/base_view_model.dart';
 import 'package:app_list/core/locator.dart';
 import 'package:app_list/core/models/CategoryModel.dart';
@@ -12,31 +14,10 @@ import 'package:random_string/random_string.dart';
 class NotesItemViewModel extends BaseViewModel {
   String heroTag = 'note-${randomString(20)}';
   String dateNow = DateTime.now().toString();
+  String categoryKey = 'category_list';
+  NoteModel currentItem;
 
-
-  // TODO: save to storage and remove it
-  List<CategoryModel> categories = [
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Work',
-      color: Colors.red,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Life',
-      color: Colors.blue,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Personal',
-      color: Colors.purple,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark_border,
-      name: 'No category',
-      color: Colors.blueAccent,
-    ),
-  ];
+  List<CategoryModel> categories = List<CategoryModel>();
 
   CategoryModel currentValue;
 
@@ -46,12 +27,38 @@ class NotesItemViewModel extends BaseViewModel {
   }
 
   void init(NoteModel item) {
-    int index = categories.indexWhere((element) => element.name == item?.category?.name);
-    currentValue = index != -1 ? categories[index] : categories[categories.length - 1];
+    currentItem = item;
+    updateCategory();
     if (item == null) return;
     noteController.text = item.text;
     heroTag = item.heroTag;
     dateNow = item.date;
+  }
+
+  void updateCategory() {
+    categories.clear();
+    List<dynamic> categoryListString = storageService.getItem(categoryKey);
+    if (categoryListString != null) {
+      for (var item in categoryListString) {
+        categories.add(CategoryModel.fromJson(jsonDecode(item)));
+      }
+    }
+
+    // initial key value
+    categories.add(CategoryModel(
+      icon: Icons.bookmark_border,
+      name: 'No category',
+      color: Colors.blueAccent,
+    ));
+    categories.add(CategoryModel(
+      color: Colors.white,
+      name: 'New',
+      icon: Icons.add,
+    ));
+
+    int index = categories.indexWhere((element) => element.name == currentItem?.category?.name);
+    currentValue = index != -1 ? categories[index] : categories[categories.length - 2];
+    notifyListeners();
   }
 
 

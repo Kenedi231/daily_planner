@@ -13,14 +13,14 @@ class _Todo extends StatelessWidget {
         child: Hero(
           tag: item.heroTag,
           child: Card(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).cardColor,
             child: ListTile(
               leading: Theme(
                 data: Theme.of(context).copyWith(
                   unselectedWidgetColor: Theme.of(context).textTheme.bodyText2.color,
                 ),
                 child: Checkbox(
-                  activeColor: Theme.of(context).primaryColor,
+                  activeColor: Theme.of(context).cardColor,
                   value: item.completed,
                   onChanged: (_) {
                     viewModel.switchStatus(item);

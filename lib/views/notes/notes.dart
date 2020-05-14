@@ -13,7 +13,7 @@ class _Notes extends StatelessWidget {
         child: Hero(
           tag: item.heroTag,
           child: Card(
-            color: item?.category?.color ?? Theme.of(context).primaryColor,
+            color: item?.category?.color ?? Theme.of(context).cardColor,
             child: ListTile(
               onLongPress: () {
                 viewModel.multipleDelete(item);
@@ -44,7 +44,7 @@ class _Notes extends StatelessWidget {
                     unselectedWidgetColor: Theme.of(context).textTheme.bodyText2.color,
                   ),
                   child: Checkbox(
-                    activeColor: Theme.of(context).primaryColor,
+                    activeColor: item?.category?.color ?? Theme.of(context).cardColor,
                     value: delete,
                     onChanged: (_) {
                       viewModel.editItem(item);
@@ -121,10 +121,8 @@ class _Notes extends StatelessWidget {
           if (viewModel.deleteMode) {
             viewModel.runMultipleDelete(buildItem);
           } else {
-            // TODO: Temporary solution
-            showNewCategorySheet(context);
-            // viewModel.setCategory(viewModel.categories[0], buildItem);
-            // viewModel.createNewNotes();
+            viewModel.setCategory(viewModel.categories[0], buildItem);
+            viewModel.createNewNotes();
           }
         },
         child: Icon(
@@ -164,8 +162,14 @@ class DropdownDialog extends StatelessWidget {
         );
       }).toList(),
       selectedValue: viewModel.currentCategory,
-      onChanged: (value) {
-        viewModel.setCategory(value ?? viewModel.currentCategory, buildItem);
+      onChanged: (value) async {
+        if (value?.name == 'New') {
+          viewModel.setCategory(viewModel.currentCategory, buildItem);
+          await showNewCategorySheet(context);
+          viewModel.updateCategory();
+        } else {
+          viewModel.setCategory(value ?? viewModel.currentCategory, buildItem);
+        }
       },
     );
   }

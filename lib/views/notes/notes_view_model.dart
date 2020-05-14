@@ -12,31 +12,10 @@ import 'package:intl/intl.dart';
 class NotesViewModel extends BaseViewModel {
   NotesViewModel();
 
-  // TODO: Get from storage and remote it
-  List<CategoryModel> categories = [
-    CategoryModel(
-      icon: Icons.bookmark_border,
-      name: 'All notes',
-      color: Colors.blueAccent,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Work',
-      color: Colors.red,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Life',
-      color: Colors.blue,
-    ),
-    CategoryModel(
-      icon: Icons.bookmark,
-      name: 'Personal',
-      color: Colors.purple,
-    ),
-  ];
+  List<CategoryModel> categories = List<CategoryModel>();
 
   String key = 'notes_list';
+  String categoryKey = 'category_list';
 
   bool deleteMode = false;
   CategoryModel currentCategory;
@@ -46,8 +25,9 @@ class NotesViewModel extends BaseViewModel {
   GlobalKey<AnimatedListState> noteListKey = GlobalKey<AnimatedListState>();
 
   void init() {
+    // storageService.removeItem(categoryKey);
+    updateCategory();
     listNotes.clear();
-    currentCategory = categories[0];
     List<dynamic> todoListString = storageService.getItem(key);
     if (todoListString == null) return;
     for (var item in todoListString) {
@@ -62,6 +42,29 @@ class NotesViewModel extends BaseViewModel {
     currentCategory = value;
     filterByCategory(buildItem);
     sortNotes();
+    notifyListeners();
+  }
+
+  void updateCategory() {
+    categories.clear();
+    List<dynamic> categoryListString = storageService.getItem(categoryKey);
+    if (categoryListString != null) {
+      for (var item in categoryListString) {
+        categories.add(CategoryModel.fromJson(jsonDecode(item)));
+      }
+    }
+    // initial key value
+    categories.insert(0, CategoryModel(
+      icon: Icons.bookmark_border,
+      name: 'All notes',
+      color: Colors.blueAccent,
+    ));
+    categories.add(CategoryModel(
+      color: Colors.white,
+      name: 'New',
+      icon: Icons.add,
+    ));
+    currentCategory = currentCategory ?? categories[0];
     notifyListeners();
   }
 
@@ -103,6 +106,7 @@ class NotesViewModel extends BaseViewModel {
   }
 
   void multipleDelete(NoteModel item) {
+    if (deleteMode) return;
     listForDelete.clear();
     var index = listNotes.indexOf(item);
     listForDelete.add(index);
@@ -123,6 +127,7 @@ class NotesViewModel extends BaseViewModel {
   
   void createNewNotes() async {
     NoteModel item = await navigation.navigateToNotesItem(null);
+    updateCategory();
     if (item == null) return;
     listNotes.add(item);
     noteListKey.currentState.insertItem(listNotes.length - 1, duration: Duration(microseconds: 0));
@@ -142,6 +147,7 @@ class NotesViewModel extends BaseViewModel {
       }
     } else {
       NoteModel item = await navigation.navigateToNotesItem(listNotes[index]);
+      updateCategory();
       if (item == null) return;
       var indexFromAll = allNotes.indexOf(listNotes[index]);
       allNotes[indexFromAll] = item;

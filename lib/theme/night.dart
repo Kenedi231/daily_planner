@@ -14,6 +14,7 @@ ThemeData _nightTheme() {
     textTheme: _buildLightTextTheme(base.textTheme).apply(
       bodyColor: Colors.white,
     ),
+    cardColor: Colors.grey[900],
     buttonColor: Colors.blueAccent,
     primaryTextTheme: _buildLightTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildLightTextTheme(base.accentTextTheme),

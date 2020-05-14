@@ -11,6 +11,7 @@ ThemeData _lightTheme() {
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
+    cardColor: Colors.grey[900],
     buttonColor: Colors.redAccent,
     textTheme: _buildLightTextTheme(base.textTheme),
     primaryTextTheme: _buildLightTextTheme(base.primaryTextTheme),

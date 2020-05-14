@@ -3,6 +3,7 @@ library notes_item_view;
 import 'package:app_list/core/models/CategoryModel.dart';
 import 'package:app_list/core/models/NoteModel.dart';
 import 'package:app_list/core/services/localization/app_localization.dart';
+import 'package:app_list/utils/add_new_category.dart';
 import 'package:app_list/widgets/dropdown_dialog/dropdown_dialog_widget.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 import 'package:flutter/material.dart';
