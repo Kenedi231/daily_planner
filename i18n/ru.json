@@ -9,5 +9,18 @@
     "Gallery": "Галерея",
     "Crop": "Обрезать",
     "Zoom and crop": "Редактирование",
-    "Cancel": "Отмена"
+    "Cancel": "Отмена",
+    "cancel": "отмена",
+    "CANCEL": "ОТМЕНА",
+    "OK": "OK",
+    "selected": "выбрано",
+    "Name": "Название",
+    "Please, enter some text": "Пожалуйста, введите что-нибудь",
+    "This name is not avaible": "Это название не доступно",
+    "Same name already exist": "Такое название уже существует",
+    "New note category": "Новая категория",
+    "Select category": "Выберите категорию",
+    "None": "Не",
+    "Dark mode": "Ночной режим",
+    "Settings": "Настройки"
 }

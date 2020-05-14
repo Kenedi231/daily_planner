@@ -3,23 +3,17 @@ import 'dart:io';
 
 import 'package:app_list/core/base/base_view_model.dart';
 import 'package:app_list/core/locator.dart';
-import 'package:app_list/core/services/custom_theme_service.dart';
 import 'package:app_list/core/services/localization/app_language.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PersonViewModel extends BaseViewModel {
-  static const LIGHT_THEME = 'light_theme';
   static const AVATAR = 'avatar';
 
   PersonViewModel();
   var image;
-  bool isLightTheme = false;
 
   void initPage() async {
-    // init theme
-    bool theme = storageService.getItem(LIGHT_THEME);
-    isLightTheme = theme == null;
 
     // init photo
     String base64String = storageService.getItem(AVATAR);
@@ -32,6 +26,10 @@ class PersonViewModel extends BaseViewModel {
       image.writeAsBytesSync(bytes);
       notifyListeners();
     });
+  }
+
+  void navigateToSettings() {
+    navigation.navigateToSettings();
   }
 
   Future getImage(context, type) async {
@@ -50,15 +48,6 @@ class PersonViewModel extends BaseViewModel {
     storageService.setItem(AVATAR, 'null');
     String base64String = base64Encode(tempImage.readAsBytesSync());
     storageService.setItem(AVATAR, base64String);
-  }
-
-  void changeTheme() {
-    var themeController = locator<CustomThemeService>();
-    themeController.switchTheme();
-    bool theme = themeController.islightTheme;
-    isLightTheme = theme;
-    storageService.setItem(LIGHT_THEME, theme);
-    notifyListeners();
   }
 
   void changeLocale(String locale) {

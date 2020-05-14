@@ -123,6 +123,9 @@ Future<void> showNewCategorySheet(context) async {
                         ),
                       ),
                       validator: (String value) {
+                        if (value.isEmpty) {
+                            return i18n('Please, enter some text');
+                          }
                         if (categories.where((element) => element.name == value).length != 0) {
                           return i18n('Same name already exist');
                         }

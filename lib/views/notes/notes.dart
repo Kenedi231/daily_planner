@@ -85,7 +85,10 @@ class _Notes extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('${viewModel.listForDelete.length == 0 ? i18n('None') : viewModel.listForDelete.length} ${i18n('selected')}'),
+                    Text(
+                      '${viewModel.listForDelete.length == 0 ? i18n('None') : viewModel.listForDelete.length} ${i18n('selected')}',
+                      style: TextStyle(color: Theme.of(context).textTheme.headline5.color),
+                    ),
                     RaisedButton(
                       elevation: 0.0,
                       focusElevation: 0.0,
@@ -94,7 +97,7 @@ class _Notes extends StatelessWidget {
                       child: Text(
                         i18n('cancel'),
                         style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText2.color,
+                          color: Theme.of(context).textTheme.headline5.color,
                         ),
                       ),
                     ),

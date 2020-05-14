@@ -95,11 +95,9 @@ class _Person extends StatelessWidget {
           ),
           SizedBox(height: 50),
           GestureDetector(
-            onTap: viewModel.changeTheme,
+            onTap: viewModel.navigateToSettings,
             child: Icon(
-              viewModel.isLightTheme
-                ? Icons.brightness_7
-                : Icons.brightness_2,
+              Icons.settings,
               color: Theme.of(context).primaryColor,
               size: 100,
             ),
