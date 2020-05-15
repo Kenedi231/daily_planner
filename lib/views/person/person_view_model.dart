@@ -2,18 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_list/core/base/base_view_model.dart';
-import 'package:app_list/core/locator.dart';
-import 'package:app_list/core/services/localization/app_language.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PersonViewModel extends BaseViewModel {
   static const AVATAR = 'avatar';
+  static const NICKNAME = 'nickname';
+
+  String name;
 
   PersonViewModel();
   var image;
 
   void initPage() async {
+    name = storageService.getItem(NICKNAME) ?? 'Your Name';
 
     // init photo
     String base64String = storageService.getItem(AVATAR);
@@ -28,8 +30,10 @@ class PersonViewModel extends BaseViewModel {
     });
   }
 
-  void navigateToSettings() {
-    navigation.navigateToSettings();
+  void navigateToSettings() async {
+    await navigation.navigateToSettings();
+    name = storageService.getItem(NICKNAME) ?? 'Your Name';
+    notifyListeners();
   }
 
   Future getImage(context, type) async {
@@ -48,17 +52,9 @@ class PersonViewModel extends BaseViewModel {
     storageService.setItem(AVATAR, 'null');
     String base64String = base64Encode(tempImage.readAsBytesSync());
     storageService.setItem(AVATAR, base64String);
-  }
-
-  void changeLocale(String locale) {
-    var localeController = locator<AppLanguage>();
-    localeController.changeLanguage(locale);
-    notifyListeners();
-  }
-  
+  }  
 
   void closeAction() {
     navigation.pop();
   }
-  // Add ViewModel specific code here
 }

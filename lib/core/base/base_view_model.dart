@@ -1,6 +1,7 @@
 import 'package:app_list/core/locator.dart';
 import 'package:app_list/core/services/custom_theme_service.dart';
 import 'package:app_list/core/services/local_storage_service.dart';
+import 'package:app_list/core/services/localization/app_language.dart';
 import 'package:app_list/core/services/navigator_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -15,6 +16,7 @@ class BaseViewModel extends ChangeNotifier {
   var navigation = locator<NavigatorService>();
   var storageService = locator<LocalStorageService>();
   var themeService = locator<CustomThemeService>();
+  var localeController = locator<AppLanguage>();
 
   BaseViewModel({
     bool busy = false,

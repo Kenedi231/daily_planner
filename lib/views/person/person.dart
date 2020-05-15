@@ -7,59 +7,74 @@ class _Person extends StatelessWidget {
 
   void _showPhotoActionSheet(context) {
     var i18n = AppLocalizations.of(context).translate;
-    showActionSheet(context, Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        new ListTile(
-          leading: Icon(Icons.photo_camera),
-          title: Text(i18n('Camera')),
-          onTap: () async {
-            await viewModel.getImage(context, 'camera');
-          },
-        ),
-        new ListTile(
-          leading: Icon(Icons.photo_library),
-          title: Text(i18n('Gallery')),
-          onTap: () async {
-            await viewModel.getImage(context, 'gallery');
-          },
-        ),
-        new ListTile(
-          leading: Icon(Icons.close),
-          title: Text(i18n('Cancel')),
-          onTap: viewModel.closeAction,
-        ),
-      ]
+    showActionSheet(context, Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FlatButton(
+            onPressed: () async {
+              await viewModel.getImage(context, 'gallery');
+            },
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      border: Border.all(width: 2, color: Colors.black38)),
+                  child: Icon(
+                    Icons.photo_camera,
+                    color: Colors.black38,
+                    size: 34,
+                  ),
+                ),
+                Text(
+                  i18n('Camera'),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline5.color,
+                  ),
+                ),
+              ],
+            )
+          ),
+          FlatButton(
+            onPressed: () async {
+              await viewModel.getImage(context, 'camera');
+            },
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(150),
+                      border: Border.all(width: 2, color: Colors.black38)),
+                  child: Icon(
+                    Icons.photo_library,
+                    color: Colors.black38,
+                    size: 34,
+                  ),
+                ),
+                Text(
+                  i18n('Gallery'),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline5.color,
+                  ),
+                ),
+              ],
+            )
+          ),
+        ]
+      ),
     ));
   }
-
-  void _showLanguageActionSheet(context) {
-    var locales = AppLocalizations.locales;
-    var i18n = AppLocalizations.of(context).translate;
-    List<Widget> children = List<Widget>();
-    locales.forEach((item) {
-      children.add(new ListTile(
-        title: Text(item),
-        onTap: () {
-          viewModel.changeLocale(item);
-          viewModel.closeAction();
-        }
-      ));
-    });
-    children.add(new ListTile(
-      title: Text(i18n('Cancel')),
-      onTap: viewModel.closeAction,
-    ));
-    showActionSheet(context, Column(
-      mainAxisSize: MainAxisSize.min,
-      children: children,
-    ));
-  }
-
 
   @override
   Widget build(BuildContext context) {
-    var i18n = AppLocalizations.of(context).translate;
+    // var i18n = AppLocalizations.of(context).translate;
     return Container(
       margin: EdgeInsets.all(0),
       color: Theme.of(context).backgroundColor,
@@ -86,7 +101,7 @@ class _Person extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Text(
-            'Claire Rain',
+            viewModel.name,
             style: TextStyle(
               color: Theme.of(context).textTheme.headline5.color,
               fontSize: 30,
@@ -100,19 +115,6 @@ class _Person extends StatelessWidget {
               Icons.settings,
               color: Theme.of(context).primaryColor,
               size: 100,
-            ),
-          ),
-          SizedBox(height: 20),
-          RaisedButton(
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              _showLanguageActionSheet(context);
-            },
-            child: Text(
-              i18n('Change language'),
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText2.color,
-              ),
             ),
           ),
         ],

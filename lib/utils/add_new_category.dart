@@ -141,7 +141,7 @@ Future<void> showNewCategorySheet(context) async {
             ),
           ),
           ButtonBar(
-            buttonMinWidth: 170,
+            buttonMinWidth: MediaQuery.of(context).size.width / 2.5,
             alignment: MainAxisAlignment.center,
             buttonTextTheme: ButtonTextTheme.primary,
             buttonPadding: EdgeInsets.all(0),
