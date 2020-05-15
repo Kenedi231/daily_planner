@@ -15,7 +15,7 @@ class _Person extends StatelessWidget {
         children: [
           FlatButton(
             onPressed: () async {
-              await viewModel.getImage(context, 'gallery');
+              await viewModel.getImage(context, 'camera');
             },
             child: Column(
               children: <Widget>[
@@ -42,7 +42,7 @@ class _Person extends StatelessWidget {
           ),
           FlatButton(
             onPressed: () async {
-              await viewModel.getImage(context, 'camera');
+              await viewModel.getImage(context, 'gallery');
             },
             child: Column(
               children: <Widget>[
